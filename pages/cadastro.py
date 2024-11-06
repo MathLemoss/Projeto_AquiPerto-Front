@@ -23,7 +23,7 @@ def cadastro_page():
                 if response.status_code == 201:
                     st.success("Cadastro realizado com sucesso! Você pode agora fazer login.")
                     st.session_state.page = 'login'  # Redirect to login.py
-                    st.experimental_rerun()  # Reload the app to update the page
+                    st.rerun()
                     return
                 else:
                     error_message = response.json().get('erro', 'Erro desconhecido.')
