@@ -52,3 +52,4 @@ def home_page():
     except FileNotFoundError:
         st.error("O arquivo 'home.html' não foi encontrado na pasta 'templates'.")
 
+
