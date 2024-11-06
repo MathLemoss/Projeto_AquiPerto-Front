@@ -8,6 +8,7 @@ API_URL = "http://localhost:5000"
 # Exibir o logo
 if os.path.exists("img/logo.png"):
     st.image("img/logo.png", width=200)
+    # st.markdown("<meta http-equiv='refresh' content='0; url=/home.py' />", unsafe_allow_html=True)
 
 st.title("Login")
 
@@ -24,7 +25,7 @@ if st.button("Entrar"):
                 st.session_state['logged_in'] = True
                 st.session_state['user_email'] = email
                 # Redirecionar para a página Home
-                st.markdown("<meta http-equiv='refresh' content='0; url=/' />", unsafe_allow_html=True)
+                st.markdown("<meta http-equiv='refresh' content='0; url=/home.py' />", unsafe_allow_html=True)
             else:
                 error_message = response.json().get('erro', 'Erro desconhecido.')
                 st.error(f"Erro no login: {error_message}")
@@ -37,3 +38,4 @@ if st.button("Entrar"):
 if 'logged_in' in st.session_state and st.session_state['logged_in']:
     # Usuário já está logado, redirecionar para a Home
     st.markdown("<meta http-equiv='refresh' content='0; url=/' />", unsafe_allow_html=True)
+
