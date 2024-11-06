@@ -88,14 +88,14 @@ def botoes_sidebar():
     
     # Primeira seção: Acesso (Login e Cadastro)
     st.sidebar.markdown("<div class='section-title'>Acesso</div>", unsafe_allow_html=True)
-    st.sidebar.markdown("<a href='/login' class='sidebar-button'><span>Login</span></a>", unsafe_allow_html=True)
-    st.sidebar.markdown("<a href='/cadastro' class='sidebar-button'><span>Cadastro</span></a>", unsafe_allow_html=True)
+    st.sidebar.markdown("<a href='/login' target='_self' class='sidebar-button'><span>Login</span></a>", unsafe_allow_html=True)
+    st.sidebar.markdown("<a href='/cadastro' target='_self' class='sidebar-button'><span>Cadastro</span></a>", unsafe_allow_html=True)
     
     # Segunda seção: Navegação (Home, Serviços, Favoritos, Mapa)
     st.sidebar.markdown("<div class='section-title'>Navegação</div>", unsafe_allow_html=True)
-    st.sidebar.markdown("<a href='/servicos' class='sidebar-button'><span>Serviços</span></a>", unsafe_allow_html=True)
-    st.sidebar.markdown("<a href='/favoritos' class='sidebar-button'><span>Favoritos</span></a>", unsafe_allow_html=True)
-    st.sidebar.markdown("<a href='/mapa' class='sidebar-button'><span>Mapa</span></a>", unsafe_allow_html=True)
+    st.sidebar.markdown("<a href='/servicos' target='_self' class='sidebar-button'><span>Serviços</span></a>", unsafe_allow_html=True)
+    # st.sidebar.markdown("<a href='/favoritos' class='sidebar-button'><span>Favoritos</span></a>", unsafe_allow_html=True)
+    st.sidebar.markdown("<a href='/mapa' target='_self' class='sidebar-button'><span>Mapa</span></a>", unsafe_allow_html=True)
 
 botoes_sidebar()
 

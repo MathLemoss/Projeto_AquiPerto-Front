@@ -1,6 +1,3 @@
-# Instalar a biblioteca streamlit-option-menu
-# !pip install streamlit-option-menu
-
 import streamlit as st
 from streamlit_option_menu import option_menu
 import requests
@@ -9,6 +6,14 @@ import requests
 api_url = "http://127.0.0.1:5000/locais"
 response = requests.get(api_url)
 locais = response.json()
+
+api_fav_url = "http://127.0.0.1:5000/favoritos"
+response_fav = requests.get(api_fav_url)
+favoritos = response_fav.json()
+
+api_user_url = "http://127.0.0.1:5000/usuarios"
+response_user = requests.get(api_user_url)
+usuarios = response_user.json()
 
 # Separar os locais por tipo
 supermercados = [dicio for dicio in locais["locais"] if dicio["tipo"] == "Supermercado"]
@@ -26,8 +31,8 @@ st.sidebar.markdown("Olá!")
 
 # Menu de navegação
 with st.sidebar:
-    selected = option_menu("Menu", ["Supermercados", "Farmácias", "Shopping center", "Estacionamentos", "Restaurantes"], 
-    icons=["cart4", "capsule", "building", "car-front-fill", "cup-hot"], menu_icon="list", default_index=0)
+    selected = option_menu("Menu", ["Supermercados", "Farmácias", "Shopping center", "Estacionamentos", "Restaurantes", "Favoritos"], 
+    icons=["cart4", "capsule", "building", "car-front-fill", "cup-hot", "bag-heart"], menu_icon="list", default_index=0)
 
 # Página de Supermercados
 if selected == "Supermercados":
@@ -119,6 +124,32 @@ elif selected == "Restaurantes":
             <hr>
         """, unsafe_allow_html=True)
 
+# Página de Favoritos
+elif selected == "Favoritos":
+    st.title("Meus Locais Favoritos")
+    st.markdown("""
+        <h2>Bem-vindo à sua página de locais favoritos!</h2>
+        <p>Aqui você encontrará uma seleção dos seus locais favoritos.</p>
+    """, unsafe_allow_html=True)
+
+    # Verificar se as variáveis estão definidas e preenchidas
+    if favoritos and locais and usuarios:
+        for fav in favoritos:
+            usuario = next((user for user in usuarios["usuarios"] if user["_id"] == fav["id_usuarios"]), None)
+            local = next((loc for loc in locais["locais"] if loc["id"] == fav["id_locations"]), None)
+                
+            if local and usuario:
+                st.markdown(f"""
+                    <h3>{local["nome"]}</h3>
+                    <p><strong>Endereço:</strong> {local["endereco"]}</p>
+                    <p><strong>Telefone:</strong> {local["telefone"]}</p>
+                    <p><strong>Avaliação:</strong> {local["avaliacao"]}⭐</p>
+                    <img src="{local["imagem"]}" style="width: 100%; border-radius: 10px;">
+                    <hr>
+                """, unsafe_allow_html=True)
+    else:
+        st.markdown("<p>Nenhum favorito encontrado.</p>", unsafe_allow_html=True)
+
 
 def botoes_sidebar1():
     # Estilização CSS para os botões e títulos das seções
@@ -182,14 +213,14 @@ def botoes_sidebar1():
     
     # Primeira seção: Acesso (Login e Cadastro)
     st.sidebar.markdown("<div class='section-title'>Acesso</div>", unsafe_allow_html=True)
-    st.sidebar.markdown("<a href='/login' class='sidebar-button'><span>Login</span></a>", unsafe_allow_html=True)
-    st.sidebar.markdown("<a href='/cadastro' class='sidebar-button'><span>Cadastro</span></a>", unsafe_allow_html=True)
+    st.sidebar.markdown("<a href='/login' target='_self' class='sidebar-button'><span>Login</span></a>", unsafe_allow_html=True)
+    st.sidebar.markdown("<a href='/cadastro' target='_self' class='sidebar-button'><span>Cadastro</span></a>", unsafe_allow_html=True)
     
     # Segunda seção: Navegação (Home, Serviços, Favoritos, Mapa)
     st.sidebar.markdown("<div class='section-title'>Navegação</div>", unsafe_allow_html=True)
-    st.sidebar.markdown("<a href='/' class='sidebar-button'><span>Home</span></a>", unsafe_allow_html=True)
-    st.sidebar.markdown("<a href='/favoritos' class='sidebar-button'><span>Favoritos</span></a>", unsafe_allow_html=True)
-    st.sidebar.markdown("<a href='/mapa' class='sidebar-button'><span>Mapa</span></a>", unsafe_allow_html=True)
+    st.sidebar.markdown("<a href='/' target='_self' class='sidebar-button'><span>Home</span></a>", unsafe_allow_html=True)
+    # st.sidebar.markdown("<a href='/favoritos' target='_self' class='sidebar-button'><span>Favoritos</span></a>", unsafe_allow_html=True)
+    st.sidebar.markdown("<a href='/mapa' target='_self' class='sidebar-button'><span>Mapa</span></a>", unsafe_allow_html=True)
     
 botoes_sidebar1()
 
@@ -266,7 +297,7 @@ def botoes_sidebar2():
     # selected = query_params.get('selected', ['Supermercados'])[0]  # Padrão para 'Supermercados' se não definido
     
     # Lista de opções
-    options = ["Supermercados", "Farmácias", "Shopping center", "Estacionamentos", "Restaurantes"]
+    # options = ["Supermercados", "Farmácias", "Shopping center", "Estacionamentos", "Restaurantes"]
     
     # Ícones correspondentes (opcional: ajuste conforme necessário)
     # icons = {

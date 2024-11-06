@@ -7,7 +7,7 @@ from folium.plugins import LocateControl, MeasureControl, BeautifyIcon
 
 api_url = "http://127.0.0.1:5000/locais"
 
-st.set_page_config(initial_sidebar_state="collapsed")
+st.set_page_config(initial_sidebar_state="collapsed", page_title="Mapa", page_icon="🗺️")
 
 response = requests.get(api_url)
 markers_data = response.json()
