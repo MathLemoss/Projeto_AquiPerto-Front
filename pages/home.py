@@ -51,3 +51,4 @@ def home_page():
         components.html(html_code, width=None, height=920, scrolling=False)
     except FileNotFoundError:
         st.error("O arquivo 'home.html' não foi encontrado na pasta 'templates'.")
+
